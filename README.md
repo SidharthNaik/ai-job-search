@@ -95,7 +95,7 @@ python3 tools/install_portal_clis.py   # Windows: python tools\install_portal_cl
 
 It runs `bun install` in every portal CLI under `.agents/skills/*/cli/` - discovered, not listed, so a portal you add with `/add-portal` or copy from another fork is included on a fresh clone. A CLI whose `package.json` declares an install-time lifecycle script is skipped and reported rather than run. `--dry-run` shows what it would install.
 
-For `linkedin-search` and `freehire-search` the install is optional: both have zero runtime dependencies and run with plain `bun`; `bun install` only pulls TypeScript dev types.
+For `linkedin-search`, `freehire-search` and `indeed-search` the install is optional: they have zero runtime dependencies and run with plain `bun`; `bun install` only pulls TypeScript dev types.
 
 ### 3. Set up your profile
 
@@ -186,6 +186,7 @@ ai-job-search/
 │   ├── jobindex-search/               # Jobindex.dk (Denmark)
 │   ├── jobnet-search/                 # Jobnet.dk (Denmark, government portal)
 │   ├── linkedin-search/               # LinkedIn public job listings (country-agnostic)
+│   ├── indeed-search/                 # Indeed India public search and full posting detail
 │   └── freehire-search/               # freehire.me tech job aggregator (multi-market, REST API)
 ├── cv/
 │   └── main_example.tex               # moderncv LaTeX template
@@ -308,6 +309,23 @@ For **country-agnostic** starting points outside Denmark, the repo ships two por
 - **`freehire-search`** — queries the [freehire.me](https://freehire.me) aggregator's public REST API (JSON, no API key). Tech-focused (software, data, engineering, DevOps, remote), multi-market via facet flags (`--region`, `--country`, `--remote`), and **zero runtime dependencies**. Unlike the HTML-scraping Danish portals, results come back structured (skills, seniority, category). The backend is MIT-licensed and [self-hostable](https://github.com/strelov1/freehire) — point `FREEHIRE_API_URL` at your own instance if you prefer. See `.agents/skills/freehire-search/SKILL.md`.
 
 ### Extending the framework: portals, templates, criteria - and borrowing from other forks
+
+This India fork also includes **`indeed-search`**, using Indeed India's public
+search pages and embedded full descriptions, with no login, API key or paid
+provider. It obeys current robots.txt, uses an honest tool identity, and is for
+low-volume personal use. No native experience, recency or workplace filter is
+claimed. Existing discovery routes `/scrape`, `/rank` and `/apply` to its CLI.
+
+```bash
+bun run .agents/skills/indeed-search/cli/src/cli.ts search --country IN -l India -q "Senior Software Engineer" --limit 3 --experience-target 8 --format table
+bun run .agents/skills/indeed-search/cli/src/cli.ts detail <id-or-url> --format plain
+```
+
+`--experience-target 8` locally analyzes full descriptions, prioritizes explicit
+overall requirements starting at eight or more, and retains uncertain cases
+with their actual ranges and quoted evidence. A 10+ requirement remains ten,
+not eight. See [Indeed usage and limitations](.agents/skills/indeed-search/SKILL.md)
+and [verified source details](.agents/skills/indeed-search/url-reference.md).
 
 Everything above adds up to an extension model, so here it is stated plainly. The framework has three extension points, and none of them require touching upstream:
 
