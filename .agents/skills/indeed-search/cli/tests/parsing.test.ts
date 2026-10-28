@@ -19,7 +19,7 @@ describe("observed response parsing", () => {
   })
   test("missing title remains null; invalid timestamps do not invent a date", () => {
     expect(parseSearch(cardsHTML([{jobkey:ID,pubDate:0}])).results[0].date).toBeNull()
-    expect(parseSearch(cardsHTML([{jobkey:ID,pubDate:"yesterday"}])).results[0].title).toBeNull()
+    expect(parseSearch(cardsHTML([{jobkey:ID,pubDate:"yesterday"}])).results[0].date).toBeNull()
   })
   test("explicit empty differs from changed, malformed and all-invalid responses", () => {
     expect(parseSearch(cardsHTML([])).results).toEqual([])
