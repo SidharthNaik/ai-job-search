@@ -1,0 +1,13 @@
+{
+  "name": "indeed-cli",
+  "version": "1.0.0",
+  "description": "Indeed India public search and embedded posting detail; zero runtime dependencies.",
+  "type": "module",
+  "bin": { "indeed-search": "src/cli.ts" },
+  "scripts": {
+    "start": "bun run src/cli.ts",
+    "test": "bun test --timeout 30000",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": { "typescript": "^5.4.0", "@types/bun": "1.3.14" }
+}

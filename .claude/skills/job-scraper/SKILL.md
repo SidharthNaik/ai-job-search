@@ -104,6 +104,13 @@ looks identical to a job never seen, and the recorded status is what makes a lat
 ghost report self-triaging. `isActive: true` is only the absence of that banner, not
 proof the posting is open; deadlines and dead URLs remain `/rank`'s job.
 
+`indeed-search detail` emits `isActive: false` only for the selected posting's
+explicit `isJobExpired: true` source flag. Record that case as `expired` in the
+same way. Its `isActive: null` / `status: unknown` carries no closure evidence;
+an access challenge, missing description or mismatched ID is a retrieval failure,
+not an expired posting. Its `experience` evidence comes from the full description:
+preserve the actual years/ranges and uncertainty when evaluating an 8+ target.
+
 **From WebSearch results:** Use `WebFetch` on the posting URL and extract the same
 fields manually. If it returns HTTP 403, retry with browser headers via curl per
 `.claude/skills/job-application-assistant/09-web-research.md` before giving up — most

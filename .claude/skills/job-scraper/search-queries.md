@@ -15,6 +15,7 @@ The `site:` query templates in this file are the **WebSearch fallback** — for 
 Primary (your market's job boards - scaffold one with `/add-portal`):
 - **[YOUR_JOB_BOARD]** - your market's largest general job board
 - **linkedin.com/jobs** - LinkedIn job listings (filter: [YOUR_COUNTRY] / [YOUR_CITY]); also covered by `linkedin-search` CLI
+- **in.indeed.com** - Indeed India; covered by `indeed-search` CLI. Use the following fallback queries if its CLI fails.
 - **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field (optional)
 - **[YOUR_ADDITIONAL_JOB_BOARD]** - another major board for your market (optional)
 
@@ -22,6 +23,21 @@ Secondary (company career pages via Google):
 - Direct Google searches with `site:` filters for known target companies
 
 ## Query Categories
+
+### Indeed India fallback: software engineering
+
+```
+site:in.indeed.com "Software Engineer" India
+site:in.indeed.com "Senior Software Engineer" India
+site:in.indeed.com "Lead Software Engineer" Bengaluru OR Hyderabad OR Pune
+site:in.indeed.com "Staff Software Engineer" India
+```
+
+These discover titles only. Fetch full descriptions before evaluating an 8+
+years target; preserve actual minima/ranges and flag conflicting or missing
+experience evidence. Do not treat search keywords or Senior/Lead/Staff titles
+as a numeric experience filter. Prefer the employer's own posting when an
+Indeed fetch is unavailable, following `09-web-research.md`.
 
 Queries are grouped by priority. Write **each category in every language from your Languages table** (see Language scope above). Combine each query with your location terms (e.g. your city, region, or metro area) where the site supports it.
 
